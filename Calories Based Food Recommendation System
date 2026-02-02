@@ -1,0 +1,65 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Meal {
+    string name;
+    int calories;
+};
+
+void recommendMeal(Meal meals[], int size, int &remainingCalories, string mealType) {
+    cout << "\nRecommended " << mealType << ":\n";
+
+    for (int i = 0; i < size; i++) {
+        if (meals[i].calories <= remainingCalories) {
+            cout << "- " << meals[i].name 
+                 << " (" << meals[i].calories << " kcal)\n";
+            remainingCalories -= meals[i].calories;
+            break;
+        }
+    }
+}
+
+int main() {
+    int dailyCalories;
+
+    cout << "----- Calorie-Based Meal Recommendation System -----\n";
+    cout << "Enter your daily calorie limit: ";
+    cin >> dailyCalories;
+
+    // Meal databases
+    Meal breakfast[] = {
+        {"Oats with Fruits", 250},
+        {"Boiled Eggs", 200},
+        {"Smoothie Bowl", 300}
+    };
+
+    Meal lunch[] = {
+        {"Grilled Chicken Salad", 400},
+        {"Vegetable Rice", 450},
+        {"Dal with Chapati", 350}
+    };
+
+    Meal dinner[] = {
+        {"Soup and Salad", 300},
+        {"Steamed Vegetables", 250},
+        {"Paneer Stir Fry", 350}
+    };
+
+    int remainingCalories = dailyCalories;
+
+    recommendMeal(breakfast, 3, remainingCalories, "Breakfast");
+    recommendMeal(lunch, 3, remainingCalories, "Lunch");
+    recommendMeal(dinner, 3, remainingCalories, "Dinner");
+
+    cout << "\nRemaining Calories for the day: "
+         << remainingCalories << " kcal\n";
+
+    if (remainingCalories < 0) {
+        cout << "⚠ Calorie limit exceeded! Choose lighter meals.\n";
+    } else {
+        cout << "✅ Meal plan fits within your calorie goal.\n";
+    }
+
+    return 0;
+}
